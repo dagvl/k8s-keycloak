@@ -17,14 +17,14 @@
     <!-- set binding ip for public port -->
     <xsl:template match="jboss:interfaces/jboss:interface[@name='public']/jboss:inet-address/@value">
         <xsl:attribute name="value">
-            <xsl:text>0.0.0.0</xsl:text>
+            <xsl:text>${env.POD_IP:127.0.0.1}</xsl:text>
         </xsl:attribute>
     </xsl:template>
 
     <!-- set binding ip for private port -->
     <xsl:template match="jboss:interfaces/jboss:interface[@name='private']/jboss:inet-address/@value">
         <xsl:attribute name="value">
-            <xsl:text>0.0.0.0</xsl:text>
+            <xsl:text>${env.POD_IP:127.0.0.1}</xsl:text>
         </xsl:attribute>
     </xsl:template>
 
