@@ -3,7 +3,8 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:is="urn:jboss:domain:infinispan:4.0"
-                xmlns:jboss="urn:jboss:domain:4.0">
+                xmlns:jboss="urn:jboss:domain:4.0"
+                xmlns:ut="urn:jboss:domain:undertow:3.0">
 
     <xsl:output method="xml" indent="yes"/>
 
@@ -28,6 +29,18 @@
         </xsl:attribute>
     </xsl:template>
 
+    <!-- handle proxies -->
+    <xsl:template match="ut:subsystem/ut:server[@name='default-server']/ut:http-listener[@name='default']">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+            <xsl:attribute name="proxy-address-forwarding">
+                <xsl:text>${env.PROXY_ADDRESS_FORWARDING}</xsl:text>
+            </xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+
+    <!-- identity template -->
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
